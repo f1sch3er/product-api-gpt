@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
+using Services;
 using Services.DTOs;
+using Services.interfaces;
 using Services.Requests;
-using System.Net.Mime;
 
 namespace ApiProduct.Controllers
 {
@@ -11,22 +12,29 @@ namespace ApiProduct.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private readonly IProductInterface _productServices;
 
-        // need to create a simple extesion, inject the service and use it to create a product, but for now, just return a dummy product
+        public ProductController(IProductInterface productServices)
+        {
+            _productServices = productServices;
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ProductDTO>> CreateAsync(ProductRequest request)
+        public async Task<IActionResult> CreateAsync(ProductRequest request)
         {
-            return new ProductDTO
+            var created = await _productServices.CreateAsync(request);
+
+            var links = new LinkDto
             {
-                Id = Guid.NewGuid(),
-                Name = request.Name,
-                Description = request.Description,
-                Price = request.Price,
-                Category = request.Category,
-                Stock = request.Stock
+                Rel = "self",
+                Href = Url.Action(nameof(CreateAsync), new { id = created.Id }),
+                Method = "POST"
             };
+
+            created.Links.Add(links);
+            return Ok(created);
         }
     }
 }

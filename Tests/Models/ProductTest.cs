@@ -1,6 +1,6 @@
 using Models;
 
-namespace Tests
+namespace Tests.Models
 {
     /*
         nome muito curto

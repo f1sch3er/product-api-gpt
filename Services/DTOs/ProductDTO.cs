@@ -14,5 +14,15 @@ namespace Services.DTOs
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
         public DateTime DeletedAt { get; private set; }
+
+        public List<LinkDto> Links { get; set; } = new();
+    }
+
+    public class LinkDto
+    {
+        public Guid Id { get; set; }
+        public string Href { get; set; } = string.Empty;
+        public string Rel { get; set; } = string.Empty;
+        public string Method { get; set; } = string.Empty;
     }
 }
