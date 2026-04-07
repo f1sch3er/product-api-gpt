@@ -1,26 +1,32 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.DTOs;
+using Services.Requests;
 using System.Net.Mime;
 
 namespace ApiProduct.Controllers
 {
-    [Produces(MediaTypeNames.Application.Json)]
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
 
-
+        // need to create a simple extesion, inject the service and use it to create a product, but for now, just return a dummy product
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Pet> Create(Pet pet)
+        public async Task<ActionResult<ProductDTO>> CreateAsync(ProductRequest request)
         {
-            pet.Id = _petsInMemoryStore.Any() ?
-                     _petsInMemoryStore.Max(p => p.Id) + 1 : 1;
-            _petsInMemoryStore.Add(pet);
-
-            return CreatedAtAction(nameof(GetById), new { id = pet.Id }, pet);
+            return new ProductDTO
+            {
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price,
+                Category = request.Category,
+                Stock = request.Stock
+            };
         }
     }
 }
