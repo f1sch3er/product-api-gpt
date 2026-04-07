@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ApiProduct/ApiProduct.csproj" />
+  <Project Path="Models/Models.csproj" Id="733b7a5b-0127-41af-96e7-64cc1c129d8f" />
+  <Project Path="Repositories/Repositories.csproj" Id="a02f19eb-901b-466a-a5a8-ccc858f4040c" />
+  <Project Path="Services/Services.csproj" Id="8e6f31c5-4fa5-4aec-b8de-b0fc6e4011c9" />
+  <Project Path="Tests/Tests.csproj" Id="e764b42c-4124-4270-8083-0029b4846130" />
+</Solution>
